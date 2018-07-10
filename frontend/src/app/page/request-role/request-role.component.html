@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <h5>Hello! Why do you need access to this app?</h5>
+            <h5>Enter your reason:</h5>
+
+            <form name="requestRole" class="text-center" [formGroup]="requestRoleForm">
+                <div class="form-group">
+                    <textarea class="form-control" name="reason" rows="5" placeholder="Reason"
+                              formControlName="reason"></textarea>
+                </div>
+                <button type="submit" class="btn btn-outline-secondary m-auto" (click)="onSendRequest()">Send Request
+                </button>
+            </form>
+            
+        </div>
+    </div>
+</div>

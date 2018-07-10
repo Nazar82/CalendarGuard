@@ -1,0 +1,43 @@
+<body style="font-family: Arial;margin:0;">
+<p>Hi {{name}},</p>
+<p>It appears that you've booked few GlobalLogic resources ({{resources}}) for the same time {{date}}. Please note that it is not advised to book few resources for the same time.</p>
+<p>Please confirm that you are going to use these meeting-rooms, otherwise they will be removed from the event.</p>
+
+<!-- Buttons -->
+<table
+        cellpadding="10"
+        cellspacing="20"
+        height="44"
+        align="center"
+        style="font-weight: 900;">
+    <tr>
+        <td bgcolor="#44bb44" align="center">
+            <a href="mailto:calendar.guard@globallogic.com?subject={{Subject}}&body=I confirm my booking%0D%0APlease don't change confirmation hash%0D%0AConfirmation hash:{{yesHash}}%0D%0A"
+               style=" text-decoration: none;
+              color: #ffffff;">
+
+                Yes, I'm using all of them
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+        </td>
+        <td bgcolor="#dd5555" align="center">
+            <a href="mailto:calendar.guard@globallogic.com?subject={{Subject}}&body=Cancel my booking%0D%0APlease don't change confirmation hash%0D%0AConfirmation hash:{{noHash}}%0D%0A"
+               style=" text-decoration: none;
+                color: #ffffff;">
+
+                No, delete theese events
+
+            </a>
+        </td>
+    </tr>
+</table>
+
+<p>Please note that if you will not confirm or decline resources usage, they will be automatically deleted after {{notification}} days after this email is sent.</p>
+
+<p>P.S. It has been noted that there are cases when shared resource are booked and not used. Such cases cause inconveniences for other people that would like to book a meeting room but cannot since it was already booked. So this is ok to book the shared resource if you intend to use it. But it is not advised to book the resource but not use it.</p>
+<p>P.P.S. Your colleagues would be asked to confirm bookings as well. It is on-going resource usage optimization process. Let please respect others by freeing unused resources.</p>
+
+<p style="margin:0;">Have a nice day,<br>
+    <span style="size:7px;">Calendar Guard | GlobalLogic</span><br>
+    <span style="color:#cccccc;size:7px;">This message was automatically generated, please do not reply to it.</span></p>
+</body>

@@ -1,0 +1,18 @@
+{
+    "name": "CalendarGuardV2",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "async": "^1.2.0",
+        "g": "^2.0.1",
+        "gulp": "^3.9.1",
+        "gulp-wait": "0.0.2",
+        "mongoose": "^4.3.5",
+        "python": "0.0.4",
+        "rrecur": "^2.0.0",
+        "run-sequence": "~1.1.0"
+    },
+    "devDependencies": {
+        "gulp-nodemon": "^2.2.1"
+    }
+}
