@@ -1,0 +1,41 @@
+<nav class="bg-light border">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav float-left">
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/approve-list"
+                           routerLinkActive="active"><i class="fa fa-list-alt" aria-hidden="true"></i> Approve List</a>
+                    </li>
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/manage-users" routerLinkActive="active"><i class="fa fa-user" aria-hidden="true"></i>
+                        Manage Users</a>
+                    </li>
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/manage-locations" routerLinkActive="active"><i class="fa fa-globe" aria-hidden="true"></i> Manage
+                        Locations</a></li>
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/manage-devices" routerLinkActive="active"><i class="fa fa-laptop" aria-hidden="true"></i> Manage
+                        Devices</a></li>
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/settings" routerLinkActive="active"><i class="fa fa-wrench" aria-hidden="true"></i>
+                        Settings</a>
+                    </li>
+                    <li><a class="navbar-nav navbar-text p-3" routerLink="/admin/logs" routerLinkActive="active"><i class="fa fa-list" aria-hidden="true"></i> Logs</a>
+                    </li>
+                </ul>
+                <ul class="nav float-right mt-2">
+                    <li class="">
+                        <button type="button" class="btn btn-outline-secondary btn-sm">
+                            User Side
+                        </button>
+                    </li>
+                    <li class="mx-2 text-center"><p class="mb-0 mt-1">Current User</p></li>
+                    <li class="">
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="onLogout()">Log Out
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>
+

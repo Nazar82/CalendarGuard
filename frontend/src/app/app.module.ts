@@ -14,6 +14,12 @@ import {AuthService} from './services/auth.service';
 import {RequestRoleService} from "./services/request-role.service";
 import { HeaderComponent } from './page/header/header.component';
 import { ApproveListComponent } from './page/admin/approve-list/approve-list.component';
+import { MasterComponent } from './page/admin/master/master.component';
+import { ManageUsersComponent } from './page/admin/manage-users/manage-users.component';
+import { ManageLocationsComponent } from './page/admin/manage-locations/manage-locations.component';
+import { ManageDevicesComponent } from './page/admin/manage-devices/manage-devices.component';
+import { SettingsComponent } from './page/admin/settings/settings.component';
+import { LogsComponent } from './page/admin/logs/logs.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +29,12 @@ import { ApproveListComponent } from './page/admin/approve-list/approve-list.com
         WaitRoleComponent,
         HeaderComponent,
         ApproveListComponent,
+        MasterComponent,
+        ManageUsersComponent,
+        ManageLocationsComponent,
+        ManageDevicesComponent,
+        SettingsComponent,
+        LogsComponent,
     ],
     imports: [
         AppRoutingModule, BrowserModule, HttpClientModule, ReactiveFormsModule
