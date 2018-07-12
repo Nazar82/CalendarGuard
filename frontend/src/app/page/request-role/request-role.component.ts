@@ -40,7 +40,7 @@ export class RequestRoleComponent implements OnInit {
     }
 
     /**
-     * Sends request to the server to insert a reason to database
+     * Inserts request reason, request date and 'wait-role' to user document in database
      */
     onSendRequest(): void {
         let userId;
@@ -54,12 +54,11 @@ export class RequestRoleComponent implements OnInit {
                 console.error(`Error occurred: ${err}`);
             });
 
-        let userData = {
-            reason: this.requestRoleForm.value.reason,
-            userId: userId
+        let reason = {
+            reason: this.requestRoleForm.value.reason
         };
 
-        this.requestRoleService.sendRequest(userData).subscribe(
+        this.requestRoleService.sendRequest(reason, userId).subscribe(
             user => {
                 this.changeState(user);
             },

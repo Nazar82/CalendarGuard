@@ -36,15 +36,17 @@
                     <td>{{user.request.reason}}</td>
                     <td>{{user.request.requestDate | date}}</td>
                     <td>
-                        <button class="btn btn-outline-secondary btn-sm mr-1"><i class="fa fa-check"
-                                                                                 aria-hidden="true"></i> Set as user
+                        <button class="btn btn-outline-secondary btn-sm mr-1" (click)="onSetUserRole(user._id, 'user')"><i
+                                class="fa fa-check"
+                                aria-hidden="true"></i> Set as user
                         </button>
 
-                        <button class="btn btn-outline-secondary btn-sm mr-1"><i class="fa fa-check"
-                                                                                 aria-hidden="true"></i> Set as admin
+                        <button class="btn btn-outline-secondary btn-sm mr-1" (click)="onSetUserRole(user._id, 'admin')"><i
+                                class="fa fa-check"
+                                aria-hidden="true"></i> Set as admin
                         </button>
 
-                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button class="btn btn-danger btn-sm" (click)="onDeclineUserRequest(user._id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
                 </tbody>

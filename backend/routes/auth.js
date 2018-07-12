@@ -6,16 +6,19 @@ const User = mongoose.model('User');
 
 
 router.post('/login', (req, res) => {
-    console.log('login');
+
     ldapService.authenticateUser(req.body.name, req.body.password)
         .then(() => {
+
                 User.findOne({username: req.body.name}, (err, user) => {
+
                     if (err) {
                         return res.status(500).send({
                             success: false,
                             message: 'Server error.'
                         });
                     }
+
                     if (!user) {
                         let domainName = 'globallogic.com';
                         let name = req.body.name.split('.').shift();
@@ -31,7 +34,6 @@ router.post('/login', (req, res) => {
                                     success: false,
                                     message: 'Server error.'
                                 });
-                                // logger.error({ message: 'Server error', code: HTTP_STATUS_CODES.SERVER_ERROR, error: err });
                             }
                             res.json(user);
                         });
@@ -49,19 +51,17 @@ router.post('/login', (req, res) => {
             });
 });
 
-router.put('/request-role', (req, res) => {
-    User.findById(req.body.userId, (err, user) => {
+router.put('/decline-request/user/:id', (req, res) => {
+    User.findById(req.params.id, (err, user) => {
         if (err) {
             return res.status(500).send({
                 success: false,
                 message: 'Server error.'
             });
         }
-        user.request = {
-            reason: req.body.reason,
-            requestDate: new Date()
-        };
-        user.roles.__global_roles__.push('wait-role');
+
+        user.request = {};
+        user.roles.__global_roles__ = [];
 
         user.save((err, user) => {
             if (err) {
@@ -71,8 +71,64 @@ router.put('/request-role', (req, res) => {
                 });
             }
             res.json(user);
-        })
+        });
+    })
+
+});
+
+router.put('/request-role/user/:id', (req, res) => {
+
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            return res.status(500).send({
+                success: false,
+                message: 'Server error.'
+            });
+        }
+
+        user.request = {
+            reason: req.body.reason,
+            requestDate: new Date()
+        };
+
+        user.roles.__global_roles__ = ['wait-role'];
+
+        user.save((err, user) => {
+            if (err) {
+                return res.status(500).send({
+                    success: false,
+                    message: 'Server error.'
+                });
+            }
+            res.json(user);
+        });
+
     });
- });
+});
+
+router.put('/set-role/user/:id', (req, res) => {
+
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            return res.status(500).send({
+                success: false,
+                message: 'Server error.'
+            });
+        }
+
+        user.roles.__global_roles__.splice(0, 1, req.body.role);
+
+        user.save((err, user) => {
+            if (err) {
+                return res.status(500).send({
+                    success: false,
+                    message: 'Server error.'
+                });
+            }
+            res.json(user);
+        });
+
+    });
+});
 
 module.exports = router;

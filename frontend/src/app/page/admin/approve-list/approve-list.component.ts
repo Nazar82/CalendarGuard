@@ -38,20 +38,37 @@ export class ApproveListComponent implements OnInit {
      * Downloads users from database whose roles to be set
      */
     getUsers(): void {
-        this.userService.getUsersToBeApproved().subscribe(
+        this.userService.getUsersToSetRoles().subscribe(
             (users: User[]) => {
                 this.users = users;
             },
             (err: HttpErrorResponse) => {
-                    console.error(err.message);
+                console.error(err.message);
             });
     }
 
     /**
-     * Displays caret on the table column which was sorted
-     * @param sortBy
+     * Declines user request, deletes 'wait-role' in user __global-roles__, request reason and request date in data base
+     * @param userId {string}
      */
-    showCaret(sortBy) {
+    onDeclineUserRequest(userId: string) {
+        this.userService.declineUserRequest(userId).subscribe(
+            () => {
+                this.getUsers();
+            },
+            (err: HttpErrorResponse) => {
+                console.error(err.message);
+
+            }
+        )
+    }
+
+    /**
+     * Displays caret on the table column which was sorted
+     * @param sortBy {string}
+     * @return boolean
+     */
+    showCaret(sortBy: string) {
         return sortBy === this.sortBy;
     }
 
@@ -63,13 +80,36 @@ export class ApproveListComponent implements OnInit {
     }
 
     /**
-     * Orders users on name, request reason or request date
-     * @param sortBy
+     * Sorts users on name, request reason or request date
+     * @param sortBy {string}
      */
-    onSortUsers(sortBy) {
+    onSortUsers(sortBy: string) {
         this.users = this.sortUsersService.sortUsers(this.users, sortBy, this.ascendingOrder);
         this.ascendingOrder = !this.ascendingOrder;
         this.sortBy = sortBy;
+    }
+
+    /**
+     * Sets user role
+     * @param userId {string}
+     * @param role {string}
+     */
+    onSetUserRole(userId: string, role: string) {
+
+        let userRole = {
+            role: role
+        };
+
+        this.userService.setUserRole(userRole, userId).subscribe(
+            (user) => {
+                console.log(user);
+                this.getUsers();
+                console.log(this.users);
+            },
+            (err: HttpErrorResponse) => {
+                console.error(err.message);
+            }
+        );
     }
 
     ngOnInit() {
