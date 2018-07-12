@@ -2,11 +2,25 @@ nav i {
     font-size: 15px;
 }
 
+ul {
+    color: grey;
+}
+
+ul:first-child li:hover {
+    color: black;
+}
+
 .active {
     background-color: lightgrey;
+    color: black;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+.navbar-wrapper {
+    display: flex;
+    align-items: center;
 }

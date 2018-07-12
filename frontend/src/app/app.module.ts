@@ -11,7 +11,7 @@ import { RequestRoleComponent } from './page/request-role/request-role.component
 import { WaitRoleComponent } from './page/wait-role/wait-role.component'
 
 import {AuthService} from './services/auth.service';
-import {RequestRoleService} from "./services/request-role.service";
+import {UserService} from "./services/user.service";
 import { HeaderComponent } from './page/header/header.component';
 import { ApproveListComponent } from './page/admin/approve-list/approve-list.component';
 import { MasterComponent } from './page/admin/master/master.component';
@@ -20,6 +20,8 @@ import { ManageLocationsComponent } from './page/admin/manage-locations/manage-l
 import { ManageDevicesComponent } from './page/admin/manage-devices/manage-devices.component';
 import { SettingsComponent } from './page/admin/settings/settings.component';
 import { LogsComponent } from './page/admin/logs/logs.component';
+import { FilterUsersPipe } from './pipes/filter-users/filter-users.pipe';
+import {SortUsersService} from "./services/sort-users.service";
 
 @NgModule({
     declarations: [
@@ -35,11 +37,12 @@ import { LogsComponent } from './page/admin/logs/logs.component';
         ManageDevicesComponent,
         SettingsComponent,
         LogsComponent,
+        FilterUsersPipe,
     ],
     imports: [
         AppRoutingModule, BrowserModule, HttpClientModule, ReactiveFormsModule
     ],
-    providers: [AuthService, RequestRoleService],
+    providers: [AuthService, UserService, SortUsersService],
     bootstrap: [AppComponent]
 })
 

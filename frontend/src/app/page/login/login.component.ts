@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     changeState(user): void {
 
         // Sets userRoleLink to 'request-role' if there is none
-        console.log(user.roles);
         let userRoleLink = user.roles.__global_roles__[0] ? user.roles.__global_roles__[0] : 'request-role';
         console.log(userRoleLink);
         this.router.navigate([`/${userRoleLink}`]);

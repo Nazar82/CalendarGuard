@@ -1,0 +1,16 @@
+table .w-15 {
+    width: 15%;
+}
+
+table .w-25 {
+    width: 25%;
+}
+
+table .w-30 {
+    width: 30%;
+}
+
+.sortable:hover {
+     background-color: lightgrey;
+     cursor: pointer;
+ }

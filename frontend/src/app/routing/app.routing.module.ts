@@ -22,6 +22,9 @@ const appRoutes: Routes = [
         path: 'admin', component: MasterComponent,
         children: [
             {
+                path: '', redirectTo: '/admin/approve-list', pathMatch: 'full'
+            },
+            {
                 path: 'approve-list', component: ApproveListComponent
             },
             {

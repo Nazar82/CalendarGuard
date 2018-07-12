@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {AuthService} from "../../services/auth.service";
-import {RequestRoleService} from "../../services/request-role.service";
+import {UserService} from "../../services/user.service";
 
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -18,7 +18,7 @@ export class RequestRoleComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private requestRoleService: RequestRoleService,
+        private requestRoleService: UserService,
         private router: Router
     ) {
     }

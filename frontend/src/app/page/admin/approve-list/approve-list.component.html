@@ -2,41 +2,54 @@
 
     <div class="row">
         <div class="col-md-3 col-lg-3">
-            <!--<form>-->
-                <!--<div class="form-group">-->
-                    <!--<input type="text" class="form-control" placeholder="Search by location...">-->
-                <!--</div>-->
-            <!--</form>-->
+            <form name="searchUserForm" [formGroup]="searchUserForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search the user..." formControlName="userName">
+                </div>
+            </form>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
 
-            <table class="table">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <th class="header-cell-sortable noselect">
-                        Username
-                        <span class="sortorder"></span>
+                    <th class="w-30 sortable" (click)="onSortUsers('username')">
+                        Username <i *ngIf="showCaret('username')" [class]="toggleCaret()" aria-hidden="true"></i>
                     </th>
-                    <th class="header-cell-sortable noselect">
-                        Reason
-                        <span class="sortorder"></span>
+                    <th class="w-25 sortable" (click)="onSortUsers('reason')">
+                        Reason <i *ngIf="showCaret('reason')" [class]="toggleCaret()" aria-hidden="true"></i>
                     </th>
-                    <th class="header-cell-sortable noselect">
-                        Request Date
-                        <span class="sortorder"></span>
+                    <th class="w-15 sortable" (click)="onSortUsers('requestDate')">
+                        Request Date <i *ngIf="showCaret('requestDate')" [class]="toggleCaret()" aria-hidden="true"></i>
                     </th>
-                    <th class="header-cell noselect">
+                    <th class="w-25">
                         Action
                     </th>
                 </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of users | filterUsers : searchUserForm.value.userName">
+                    <td>{{user.username}}</td>
+                    <td>{{user.request.reason}}</td>
+                    <td>{{user.request.requestDate | date}}</td>
+                    <td>
+                        <button class="btn btn-outline-secondary btn-sm mr-1"><i class="fa fa-check"
+                                                                                 aria-hidden="true"></i> Set as user
+                        </button>
 
-                <tr class="table-row">
+                        <button class="btn btn-outline-secondary btn-sm mr-1"><i class="fa fa-check"
+                                                                                 aria-hidden="true"></i> Set as admin
+                        </button>
+
+                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </td>
                 </tr>
+                </tbody>
             </table>
-            <div>
+            <div *ngIf="!users.length">
                 No new requests
             </div>
         </div>
