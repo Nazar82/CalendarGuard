@@ -5,7 +5,7 @@ const User = mongoose.model('User');
 
 router.get('/users', (req, res) => {
 
-   User.find({'roles.__global_roles__': {$in: ['wait-role']}}, (err, users) => {
+   User.find({'roles.__global_roles__': {$in: [req.query.firstRole, req.query.secondRole]}}, (err, users) => {
        if(err) {
            return res.status(500).send({
                success: false,
@@ -14,6 +14,7 @@ router.get('/users', (req, res) => {
        }
        res.json(users);
    });
+
 });
 
 

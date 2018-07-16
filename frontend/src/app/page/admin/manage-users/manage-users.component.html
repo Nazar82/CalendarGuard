@@ -1,40 +1,45 @@
-<div class="container manage-users">
+<div class="container approve-list">
 
     <div class="row">
         <div class="col-md-3 col-lg-3">
-            <!--<form>-->
-                <!--<div class="form-group">-->
-                    <!--<input type="text" class="form-control" placeholder="Search...">-->
-                <!--</div>-->
-            <!--</form>-->
-
+            <form name="searchUserForm" [formGroup]="searchUserForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search the user..." formControlName="userName">
+                </div>
+            </form>
         </div>
     </div>
 
-
     <div class="row">
         <div class="col-md-12 col-lg-12">
-            <table class="table">
+
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <th class="header-cell-sortable noselect">
-                        Username
-                        <span class="sortorder"></span>
+                    <th class="w-30 sortable" (click)="onSortUsers('username')">
+                        Username <i *ngIf="showCaret('username')" [class]="toggleCaret()" aria-hidden="true"></i>
                     </th>
-                    <th class="header-cell-sortable noselect">
+                    <th class="w-25">
                         Role
-                        <span class="sortorder"></span>
                     </th>
-                    <th class="header-cell noselect">
+                    <th class="w-25">
                         Action
                     </th>
                 </tr>
-
-                <tr>
-
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of users | filterUsers : searchUserForm.value.userName">
+                    <td>{{user.username}}</td>
+                    <td>User Role</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="onDeclineUserRequest(user)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </td>
                 </tr>
-
+                </tbody>
             </table>
-
+            <div *ngIf="!users.length">
+                No users
+            </div>
         </div>
     </div>
 </div>

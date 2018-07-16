@@ -1,10 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse} from '@angular/common/http';
 
-import {UserService} from "../../../services/user.service";
-import {User} from "../../../models/user";
-import {SortUsersService} from "../../../services/sort-users.service";
+import {Subscription} from 'rxjs/internal/Subscription';
+
+import {User} from '../../../models/user';
+
+import {DomService} from '../../../services/dom.service';
+import {ModalService} from '../../../services/modal.service';
+import {SortUsersService} from '../../../services/sort-users.service';
+import {UserService} from '../../../services/user.service';
 
 
 @Component({
@@ -14,14 +19,20 @@ import {SortUsersService} from "../../../services/sort-users.service";
 })
 export class ApproveListComponent implements OnInit {
 
+    // Container for modal
+    @ViewChild('dynamicModal', {read: ViewContainerRef}) modalContainer;
+
     ascendingOrder = false;
-    sortBy = '';
+    modalOpened = false;
     searchUserForm: FormGroup;
+    sortBy = '';
     users: User[] = [];
 
     constructor(
         private userService: UserService,
-        private sortUsersService: SortUsersService
+        private sortUsersService: SortUsersService,
+        private domService: DomService,
+        private modalService: ModalService
     ) {
     }
 
@@ -37,8 +48,8 @@ export class ApproveListComponent implements OnInit {
     /**
      * Downloads users from database whose roles to be set
      */
-    getUsers(): void {
-        this.userService.getUsersToSetRoles().subscribe(
+    onGetUsers() {
+        this.userService.getUsers('wait-role').subscribe(
             (users: User[]) => {
                 this.users = users;
             },
@@ -51,17 +62,54 @@ export class ApproveListComponent implements OnInit {
      * Declines user request, deletes 'wait-role' in user __global-roles__, request reason and request date in data base
      * @param userId {string}
      */
-    onDeclineUserRequest(userId: string) {
-        this.userService.declineUserRequest(userId).subscribe(
-            () => {
-                this.getUsers();
-            },
-            (err: HttpErrorResponse) => {
-                console.error(err.message);
-
-            }
-        )
+    onDeleteUser(userId) {
+        console.log('User deleted!');
+        // this.userService.deleteUser(userId).subscribe(
+        //     () => {
+        //         this.onGetUsers();
+        //     },
+        //     (err: HttpErrorResponse) => {
+        //         console.error(err.message);
+        //
+        //     }
+        // )
     }
+
+    /**
+     * Opens modal on click to delete user
+     * @param userId {string}
+     * @param username {string}
+     */
+    openModal(userId, username) {
+        let modalText = `Are you sure you want to remove ${username} from the database?`;
+
+        this.modalService.setModalText(modalText);
+        this.domService.createModal(this.modalContainer);
+
+        let subscription: Subscription = this.modalService.delete.subscribe(
+            (confirm) => {
+
+                // Removes user from database if user confirms deletion
+                if (confirm) {
+                    this.onDeleteUser(userId);
+                }
+
+                // Closes modal and unsubscribes from Behaviour Object
+                if (this.modalOpened) {
+                    this.domService.closeModal(this.modalContainer);
+                    subscription.unsubscribe();
+
+                    this.modalOpened = false;
+                }
+            },
+            (err) => {
+                console.error(`Error occurred: ${err}.`);
+            }
+        );
+
+        this.modalOpened = true;
+    }
+
 
     /**
      * Displays caret on the table column which was sorted
@@ -74,9 +122,10 @@ export class ApproveListComponent implements OnInit {
 
     /**
      * Toggles caret up and down depending on ascending or descending order
+     * @return css class {string}
      */
     toggleCaret() {
-        return this.ascendingOrder ? "fa fa-caret-down" : "fa fa-caret-up";
+        return this.ascendingOrder ? 'fa fa-caret-down' : 'fa fa-caret-up';
     }
 
     /**
@@ -95,7 +144,6 @@ export class ApproveListComponent implements OnInit {
      * @param role {string}
      */
     onSetUserRole(userId: string, role: string) {
-
         let userRole = {
             role: role
         };
@@ -103,7 +151,7 @@ export class ApproveListComponent implements OnInit {
         this.userService.setUserRole(userRole, userId).subscribe(
             (user) => {
                 console.log(user);
-                this.getUsers();
+                this.onGetUsers();
                 console.log(this.users);
             },
             (err: HttpErrorResponse) => {
@@ -113,10 +161,7 @@ export class ApproveListComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.createSearchUserForm();
-        this.getUsers();
-
+        this.onGetUsers();
     }
-
 }

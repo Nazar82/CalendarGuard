@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+
 import {Observable, BehaviorSubject} from 'rxjs';
 
 @Injectable()
 
 export class AuthService {
-
     currentUserName = new BehaviorSubject<string>('');
     currentUserId = new BehaviorSubject<string>('');
 
@@ -16,8 +16,8 @@ export class AuthService {
     /**
      * Sends request to log in the user
      * @param user
+     * @return Observable
      */
-
     login(user: {}): Observable<any> {
         return this.http.post('http://localhost:3000/auth/login', user);
     }
@@ -27,7 +27,6 @@ export class AuthService {
      * @param userName
      * @param userId
      */
-
     setCurrentUserData(userName, userId): void {
         this.currentUserName.next(userName);
         this.currentUserId.next(userId);

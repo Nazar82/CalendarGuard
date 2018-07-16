@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 import {AuthService} from "../../services/auth.service";
 import {UserService} from "../../services/user.service";
 
-import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-request-role',

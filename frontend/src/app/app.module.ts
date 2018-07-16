@@ -8,10 +8,10 @@ import {AppRoutingModule} from './routing/app.routing.module';
 import {AppComponent} from './page/main/app.component';
 import {LoginComponent} from './page/login/login.component';
 import { RequestRoleComponent } from './page/request-role/request-role.component';
-import { WaitRoleComponent } from './page/wait-role/wait-role.component'
+import { WaitRoleComponent } from './page/wait-role/wait-role.component';
 
 import {AuthService} from './services/auth.service';
-import {UserService} from "./services/user.service";
+import {UserService} from './services/user.service';
 import { HeaderComponent } from './page/header/header.component';
 import { ApproveListComponent } from './page/admin/approve-list/approve-list.component';
 import { MasterComponent } from './page/admin/master/master.component';
@@ -21,7 +21,10 @@ import { ManageDevicesComponent } from './page/admin/manage-devices/manage-devic
 import { SettingsComponent } from './page/admin/settings/settings.component';
 import { LogsComponent } from './page/admin/logs/logs.component';
 import { FilterUsersPipe } from './pipes/filter-users/filter-users.pipe';
-import {SortUsersService} from "./services/sort-users.service";
+import {SortUsersService} from './services/sort-users.service';
+import {DomService} from './services/dom.service';
+import { ModalComponent } from './page/modal/modal.component';
+import {ModalService} from './services/modal.service';
 
 @NgModule({
     declarations: [
@@ -38,12 +41,14 @@ import {SortUsersService} from "./services/sort-users.service";
         SettingsComponent,
         LogsComponent,
         FilterUsersPipe,
+        ModalComponent,
     ],
     imports: [
         AppRoutingModule, BrowserModule, HttpClientModule, ReactiveFormsModule
     ],
-    providers: [AuthService, UserService, SortUsersService],
-    bootstrap: [AppComponent]
+    providers: [AuthService, DomService, ModalService, UserService, SortUsersService],
+    bootstrap: [AppComponent],
+    entryComponents: [ModalComponent]
 })
 
 export class AppModule {

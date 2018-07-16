@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+
 import {AuthService} from "../../services/auth.service";
 
 @Component({
@@ -7,7 +8,6 @@ import {AuthService} from "../../services/auth.service";
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
     currentUserName: string;
 
     constructor(
@@ -35,5 +35,4 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.setCurrentUserName();
     }
-
 }

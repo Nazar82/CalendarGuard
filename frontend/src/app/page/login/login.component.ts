@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
         // Sets userRoleLink to 'request-role' if there is none
         let userRoleLink = user.roles.__global_roles__[0] ? user.roles.__global_roles__[0] : 'request-role';
-        console.log(userRoleLink);
+
         this.router.navigate([`/${userRoleLink}`]);
     }
 
@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin(): void {
-
         let user = {
             name: this.loginForm.value.userName,
             password: this.loginForm.value.userPassword
@@ -69,9 +68,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.createLoginForm();
-
     }
-
 }
