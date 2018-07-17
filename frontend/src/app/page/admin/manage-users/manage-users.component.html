@@ -23,16 +23,26 @@
                         Role
                     </th>
                     <th class="w-25">
-                        Action
+                        <label for="selectRole">
+                            <span>Action</span>
+                        </label>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let user of users | filterUsers : searchUserForm.value.userName">
                     <td>{{user.username}}</td>
-                    <td>User Role</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" (click)="onDeclineUserRequest(user)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <form name="selectRoleForm" [formGroup]="selectRoleForm">
+                            <select id="selectRole" class="form-control w-50" formControlName="role" (change)="onSetUserRole($event.target.value, user._id)">
+                                <option value="admin" [selected]="user.roles.__global_roles__[0] === 'admin'">Admin</option>
+                                <option value="user" [selected]="user.roles.__global_roles__[0] === 'user'">User</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="openModal(user._id, user.username)"><i
+                                class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
                 </tbody>
@@ -42,4 +52,5 @@
             </div>
         </div>
     </div>
+    <ng-template #dynamicModal></ng-template>
 </div>

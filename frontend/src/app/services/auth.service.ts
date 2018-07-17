@@ -35,5 +35,4 @@ export class AuthService {
     logout() {
         // return this.http.get('https://gloapis.globallogic.com/00b4300d2d9babnhksuield1faf1b79f3b69/gloapis/login');
     }
-
 }

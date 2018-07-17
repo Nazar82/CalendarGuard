@@ -11,68 +11,67 @@ import {ModalService} from '../../../services/modal.service';
 import {SortUsersService} from '../../../services/sort-users.service';
 import {UserService} from '../../../services/user.service';
 
-
 @Component({
     selector: 'app-approve-list',
     templateUrl: './approve-list.component.html',
     styleUrls: ['./approve-list.component.css']
 })
-export class ApproveListComponent implements OnInit {
 
-    // Container for modal
-    @ViewChild('dynamicModal', {read: ViewContainerRef}) modalContainer;
+export class ApproveListComponent implements OnInit {
 
     ascendingOrder = false;
     modalOpened = false;
-    searchUserForm: FormGroup;
+    roles = ['wait-role'];
     sortBy = '';
+    searchUserForm: FormGroup;
     users: User[] = [];
 
     constructor(
-        private userService: UserService,
-        private sortUsersService: SortUsersService,
-        private domService: DomService,
-        private modalService: ModalService
+        protected userService: UserService,
+        protected sortUsersService: SortUsersService,
+        protected domService: DomService,
+        protected modalService: ModalService
     ) {
     }
+
+    // Container for modal
+    @ViewChild('dynamicModal', {read: ViewContainerRef}) modalContainer;
 
     /**
      * Creates reactive form for searching the user
      */
     createSearchUserForm(): void {
         this.searchUserForm = new FormGroup({
-            'userName': new FormControl('')
+            userName: new FormControl('')
         });
     }
 
     /**
-     * Downloads users from database whose roles to be set
+     * Removes user from data base
+     * @param userId {string}
+     */
+    onDeleteUser(userId) {
+        this.userService.deleteUser(userId).subscribe(
+            () => {
+                this.onGetUsers();
+            },
+            (err: HttpErrorResponse) => {
+                console.error(err.message);
+            }
+        );
+    }
+
+    /**
+     * Downloads users from database
      */
     onGetUsers() {
-        this.userService.getUsers('wait-role').subscribe(
+        this.userService.getUsers(this.roles).subscribe(
             (users: User[]) => {
                 this.users = users;
             },
             (err: HttpErrorResponse) => {
                 console.error(err.message);
             });
-    }
-
-    /**
-     * Declines user request, deletes 'wait-role' in user __global-roles__, request reason and request date in data base
-     * @param userId {string}
-     */
-    onDeleteUser(userId) {
-        console.log('User deleted!');
-        // this.userService.deleteUser(userId).subscribe(
-        //     () => {
-        //         this.onGetUsers();
-        //     },
-        //     (err: HttpErrorResponse) => {
-        //         console.error(err.message);
-        //
-        //     }
-        // )
     }
 
     /**
@@ -106,26 +105,27 @@ export class ApproveListComponent implements OnInit {
                 console.error(`Error occurred: ${err}.`);
             }
         );
-
         this.modalOpened = true;
     }
 
-
     /**
-     * Displays caret on the table column which was sorted
-     * @param sortBy {string}
-     * @return boolean
+     * Sets user role
+     * @param userId {string}
+     * @param role {string}
      */
-    showCaret(sortBy: string) {
-        return sortBy === this.sortBy;
-    }
+    onSetUserRole(role: string, userId: string, ) {
+        let userRole = {
+            role: role
+        };
 
-    /**
-     * Toggles caret up and down depending on ascending or descending order
-     * @return css class {string}
-     */
-    toggleCaret() {
-        return this.ascendingOrder ? 'fa fa-caret-down' : 'fa fa-caret-up';
+        this.userService.setUserRole(userRole, userId).subscribe(
+            () => {
+                this.onGetUsers();
+            },
+            (err: HttpErrorResponse) => {
+                console.error(err.message);
+            }
+        );
     }
 
     /**
@@ -139,25 +139,20 @@ export class ApproveListComponent implements OnInit {
     }
 
     /**
-     * Sets user role
-     * @param userId {string}
-     * @param role {string}
+     * Displays caret on the table column which was sorted
+     * @param sortBy {string}
+     * @return boolean
      */
-    onSetUserRole(userId: string, role: string) {
-        let userRole = {
-            role: role
-        };
+    showCaret(sortBy: string): boolean {
+        return sortBy === this.sortBy;
+    }
 
-        this.userService.setUserRole(userRole, userId).subscribe(
-            (user) => {
-                console.log(user);
-                this.onGetUsers();
-                console.log(this.users);
-            },
-            (err: HttpErrorResponse) => {
-                console.error(err.message);
-            }
-        );
+    /**
+     * Toggles caret up and down depending on ascending or descending order
+     * @return css class {string}
+     */
+    toggleCaret(): string {
+        return this.ascendingOrder ? 'fa fa-caret-down' : 'fa fa-caret-up';
     }
 
     ngOnInit() {

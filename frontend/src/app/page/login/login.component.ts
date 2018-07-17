@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 import {AuthService} from '../../services/auth.service';
 
@@ -52,9 +52,9 @@ export class LoginComponent implements OnInit {
         };
 
         this.authService.login(user).subscribe(
-            (user) => {
-                this.authService.setCurrentUserData(user.username, user._id);
-                this.changeState(user);
+            (loggedUser) => {
+                this.authService.setCurrentUserData(loggedUser.username, loggedUser._id);
+                this.changeState(loggedUser);
             },
             (err: HttpErrorResponse) => {
                 if (err.status === 401) {

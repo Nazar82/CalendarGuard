@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {User} from "../models/user";
+import {User} from '../models/user';
 
 @Injectable()
 
@@ -8,8 +8,6 @@ export class SortUsersService {
 
     constructor() {
     }
-
-    ascendingOrder: boolean;
 
     /**
      * Orders users on name, request reason or request date
@@ -19,14 +17,11 @@ export class SortUsersService {
      * @return users {array}
      */
     sortUsers(users: User[], sortBy: string, ascendingOrder: boolean): User[] {
-
         if (sortBy === 'username') {
             return users.sort((a, b) => {
                 if (ascendingOrder) {
-                    this.ascendingOrder = true;
                     return a[sortBy].localeCompare(b[sortBy]);
                 }
-
                 return b[sortBy].localeCompare(a[sortBy]);
             });
         }
@@ -48,6 +43,6 @@ export class SortUsersService {
                 return +new Date(b.request[sortBy]) - +new Date(a.request[sortBy]);
             });
         }
-
     }
 }
+

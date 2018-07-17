@@ -8,7 +8,9 @@ export class User {
              reason: string,
             requestDate: Date
         },
-        public roles: object,
+        public roles: {
+            __global_roles__: any
+        },
         public updatedAt: Date,
         public username: string,
 

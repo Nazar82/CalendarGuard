@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 export class ModalService {
     modalText = '';
 
-    //Creates Behaviour Subject to emit values
+    // Creates Behaviour Subject to emit values
     delete = new BehaviorSubject<boolean>(false);
 
     getModalText(): string {
@@ -18,5 +18,3 @@ export class ModalService {
         this.modalText = modalText;
     }
 }
-
-

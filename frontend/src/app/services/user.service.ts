@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-
 @Injectable()
 
 export class UserService {
@@ -13,12 +12,11 @@ export class UserService {
 
     /**
      * Downloads users from database
-     * @param firstRole {string}
-     * @param secondRole {string, null}
+     * @param roles {array}
      * @return Observable
      */
-    getUsers(firstRole, secondRole = null): Observable<any> {
-        let params = new HttpParams().set('firstRole', firstRole).set('secondRole', secondRole);
+    getUsers(roles): Observable<any> {
+        let params = new HttpParams().set('firstRole', roles[0]).set('secondRole', roles[1]);
         return this.http.get('http://localhost:3000/api/users', {params});
     }
 
@@ -28,7 +26,7 @@ export class UserService {
      * @return Observable
      */
     deleteUser(userId: string): Observable<any> {
-        return this.http.delete(`http://localhost:3000/auth/delete-user/${userId}`);
+        return this.http.delete(`http://localhost:3000/api/delete-user/${userId}`);
     }
 
     /**
@@ -38,7 +36,7 @@ export class UserService {
      * @return Observable
      */
     sendRequest(request: object, userId: string): Observable<any> {
-        return this.http.put(`http://localhost:3000/auth/request-role/user/${userId}`, request);
+        return this.http.put(`http://localhost:3000/api/request-role/user/${userId}`, request);
     }
 
     /**
@@ -48,7 +46,6 @@ export class UserService {
      * @return Observable
      */
     setUserRole(role: object, userId: string): Observable<any> {
-        return this.http.put(`http://localhost:3000/auth/set-role/user/${userId}`, role);
+        return this.http.put(`http://localhost:3000/api/set-role/user/${userId}`, role);
     }
-
 }

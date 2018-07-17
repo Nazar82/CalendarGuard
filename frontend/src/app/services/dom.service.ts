@@ -1,10 +1,9 @@
 import {ComponentFactoryResolver, Injectable} from '@angular/core';
 
-import {ModalComponent} from "../page/modal/modal.component";
+import {ModalComponent} from '../page/modal/modal.component';
 
 @Injectable()
 export class DomService {
-
     modal;
 
     constructor(
@@ -19,7 +18,6 @@ export class DomService {
     createModal(container): void {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
         this.modal = container.createComponent(componentFactory);
-
     }
 
     /**
@@ -28,8 +26,6 @@ export class DomService {
      */
     closeModal(container) {
         container.remove(container.indexOf(this.modal));
-
         this.modal = null;
     }
-
 }
