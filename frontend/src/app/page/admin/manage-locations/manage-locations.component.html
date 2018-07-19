@@ -1,48 +1,81 @@
-<div class="container manage-locations">
+<div class="container approve-list">
+
     <div class="row">
-
-        <div class="col-md-3 col-lg-3 ">
-            <!--<form>-->
-                <!--<div class="form-group">-->
-                    <!--<input type="text" class="form-control" placeholder="Search...">-->
-                <!--</div>-->
-            <!--</form>-->
+        <div class="col-sm-3">
+            <form name="searchUserForm" [formGroup]="searchLocationForm">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search..." formControlName="location">
+                </div>
+            </form>
         </div>
 
-        <div class="col-md-offset-3 col-md-6 col-lg-6 add-location-form-container">
-            <!--<form class="form-inline" name="addLocation">-->
-                <!--<div class="form-group">-->
-                    <!--<div class="input-group">-->
-                        <!--<div class="input-group-addon"><i class="glyphicon glyphicon-globe"></i> Add Location (3-->
-                            <!--characters min):-->
-                        <!--</div>-->
-                        <!--<input name="newLocation" type="text" class="form-control" placeholder="Location">-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>-->
-                <!--</button>-->
-            <!--</form>-->
+        <div class="col-sm-6 offset-sm-2">
+            <form name="searchUserForm" [formGroup]="addLocationForm" (submit)="onAddLocation()">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-globe fa-fw"></i>Add Location (3 characters min):</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Default" title="location-name"
+                           aria-describedby="inputGroup-sizing-default" formControlName="locationName">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit"
+                                [disabled]="isDisabledAddButton()"><i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <span class="bg-warning float-right my-1" *ngIf="isLocationNameValid()">Minimum length of location name is 3 characters</span>
+            </form>
         </div>
+
     </div>
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
-            <table class="table">
+
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <th class="col-md-3">
+                    <th class="w-25 sortable">
                         Location
                     </th>
-                    <th>
-                        Assigned User
+                    <th class="w-55">
+                        <label for="selectUser" class="mb-0">
+                            Assigned user
+                        </label>
                     </th>
-                    <th class="col-md-2">
-                        Remove Location
+                    <th>
+                        <span>Remove location</span>
                     </th>
                 </tr>
-                <tr></tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let location of locations | filterByInputString : searchLocationForm.value.location; let i = index">
+                    <td class="align-middle">{{location.locationName}}</td>
+                    <td>
+                        <form name="selectLocationForm" [formGroup]="selectUserForms[i]">
+                            <select title="selectUser" class="form-control" [formControlName]="'userId'"
+                                    (change)="onSetUser($event.target.value, location._id)">
+                                <option value="" disabled>Assign a user</option>
+                                <option *ngFor="let user of users" [value]="user._id"
+                                        [selected]="location.assignedUser === user._id"
+                                >{{user.username}}
+                                </option>
+                            </select>
+                        </form>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" type="button"
+                                (click)="openModal(location.locationName, location._id)"><i
+                                class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
             </table>
+            <div *ngIf="!locations.length">
+                No locations
+            </div>
         </div>
     </div>
-
+    <ng-template #dynamicModal></ng-template>
 </div>

@@ -7,24 +7,26 @@ import {AppRoutingModule} from './routing/app.routing.module';
 
 import {AppComponent} from './page/main/app.component';
 import {LoginComponent} from './page/login/login.component';
-import { RequestRoleComponent } from './page/request-role/request-role.component';
-import { WaitRoleComponent } from './page/wait-role/wait-role.component';
+import {RequestRoleComponent} from './page/request-role/request-role.component';
+import {WaitRoleComponent} from './page/wait-role/wait-role.component';
 
 import {AuthService} from './services/auth.service';
 import {UserService} from './services/user.service';
-import { HeaderComponent } from './page/header/header.component';
-import { ApproveListComponent } from './page/admin/approve-list/approve-list.component';
-import { MasterComponent } from './page/admin/master/master.component';
-import { ManageUsersComponent } from './page/admin/manage-users/manage-users.component';
-import { ManageLocationsComponent } from './page/admin/manage-locations/manage-locations.component';
-import { ManageDevicesComponent } from './page/admin/manage-devices/manage-devices.component';
-import { SettingsComponent } from './page/admin/settings/settings.component';
-import { LogsComponent } from './page/admin/logs/logs.component';
-import { FilterUsersPipe } from './pipes/filter-users/filter-users.pipe';
+import {HeaderComponent} from './page/header/header.component';
+import {ApproveListComponent} from './page/admin/approve-list/approve-list.component';
+import {MasterComponent} from './page/admin/master/master.component';
+import {ManageUsersComponent} from './page/admin/manage-users/manage-users.component';
+import {ManageLocationsComponent} from './page/admin/manage-locations/manage-locations.component';
+import {ManageDevicesComponent} from './page/admin/manage-devices/manage-devices.component';
+import {SettingsComponent} from './page/admin/settings/settings.component';
+import {LogsComponent} from './page/admin/logs/logs.component';
+import {FilterByInputStringPipe} from './pipes/filter-users/filter-by-input-string.pipe';
 import {SortUsersService} from './services/sort-users.service';
 import {DomService} from './services/dom.service';
-import { ModalComponent } from './page/modal/modal.component';
+import {ModalComponent} from './page/modal/modal.component';
 import {ModalService} from './services/modal.service';
+import {LocationService} from "./services/location.service";
+import {AlertComponent} from './page/alert/alert.component';
 
 @NgModule({
     declarations: [
@@ -40,15 +42,16 @@ import {ModalService} from './services/modal.service';
         ManageDevicesComponent,
         SettingsComponent,
         LogsComponent,
-        FilterUsersPipe,
+        FilterByInputStringPipe,
         ModalComponent,
+        AlertComponent,
     ],
     imports: [
         AppRoutingModule, BrowserModule, HttpClientModule, ReactiveFormsModule
     ],
-    providers: [AuthService, DomService, ModalService, UserService, SortUsersService],
+    providers: [AuthService, DomService, LocationService, ModalService, UserService, SortUsersService],
     bootstrap: [AppComponent],
-    entryComponents: [ModalComponent]
+    entryComponents: [ModalComponent, AlertComponent]
 })
 
 export class AppModule {

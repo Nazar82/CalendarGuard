@@ -3,3 +3,11 @@
     cursor: pointer;
 }
 
+select {
+    width: 25%;
+}
+
+table .w-40 { width:40%; }
+
+
+

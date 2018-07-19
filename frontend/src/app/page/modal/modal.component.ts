@@ -30,5 +30,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.modalText = '';
+        this.modalService.delete.next(false);
     }
 }

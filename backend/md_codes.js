@@ -1,0 +1,5 @@
+const MONGODB_ERROR_CODES = {
+    MD_DUPLICATE: 11000
+};
+
+module.exports = MONGODB_ERROR_CODES;

@@ -1,6 +1,7 @@
 import {ComponentFactoryResolver, Injectable} from '@angular/core';
 
 import {ModalComponent} from '../page/modal/modal.component';
+import{AlertComponent} from "../page/alert/alert.component";
 
 @Injectable()
 export class DomService {
@@ -17,6 +18,11 @@ export class DomService {
      */
     createModal(container): void {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        this.modal = container.createComponent(componentFactory);
+    }
+
+    createModal2(container): void {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
         this.modal = container.createComponent(componentFactory);
     }
 

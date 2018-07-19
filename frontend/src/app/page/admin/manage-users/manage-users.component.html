@@ -12,35 +12,37 @@
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
-
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="w-30 sortable" (click)="onSortUsers('username')">
+                    <th class="sortable w-40" (click)="onSortUsers('username')">
                         Username <i *ngIf="showCaret('username')" [class]="toggleCaret()" aria-hidden="true"></i>
                     </th>
-                    <th class="w-25">
+                    <th class="w-40">
                         Role
                     </th>
-                    <th class="w-25">
-                        <label for="selectRole">
+                    <th>
+                        <label for="selectRole" class="mb-0">
                             <span>Action</span>
                         </label>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let user of users | filterUsers : searchUserForm.value.userName">
-                    <td>{{user.username}}</td>
+                <tr *ngFor="let user of users | filterByInputString : searchUserForm.value.userName">
+                    <td class="align-middle">{{user.username}}</td>
                     <td>
                         <form name="selectRoleForm" [formGroup]="selectRoleForm">
-                            <select id="selectRole" class="form-control w-50" formControlName="role" (change)="onSetUserRole($event.target.value, user._id)">
-                                <option value="admin" [selected]="user.roles.__global_roles__[0] === 'admin'">Admin</option>
-                                <option value="user" [selected]="user.roles.__global_roles__[0] === 'user'">User</option>
+                            <select id="selectRole" class="form-control" formControlName="role"
+                                    (change)="onSetUserRole($event.target.value, user._id)">
+                                <option value="admin" [selected]="user.roles.__global_roles__[0] === 'admin'">Admin
+                                </option>
+                                <option value="user" [selected]="user.roles.__global_roles__[0] === 'user'">User
+                                </option>
                             </select>
                         </form>
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <button class="btn btn-danger btn-sm" (click)="openModal(user._id, user.username)"><i
                                 class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>

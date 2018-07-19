@@ -17,6 +17,7 @@ export class UserService {
      */
     getUsers(roles): Observable<any> {
         let params = new HttpParams().set('firstRole', roles[0]).set('secondRole', roles[1]);
+
         return this.http.get('http://localhost:3000/api/users', {params});
     }
 
